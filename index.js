@@ -29,6 +29,7 @@ window.addEventListener("keydown", changeDirection);
 
 gameStart();
 createFood();
+drawFood();
 
 function gameStart() { }
 
@@ -36,11 +37,15 @@ function nextTick() { }
 
 function clearBoard() { }
 
-/*
-* Create a random food location
-* The food should be placed at a random location on the game board
-* The location should be a multiple of the unit size
-*/
+/**
+ * @function createFood
+ * @description Generates food at a random position aligned to the game grid
+ * The position is calculated to ensure:
+ * 1. Food spawns within game boundaries
+ * 2. Food aligns perfectly with snake movement grid
+ * 3. Food won't spawn partially outside the canvas
+ * @returns {void}
+ */
 function createFood() {
     function randomFood(min, max) {
         const randNum = Math.round((Math.random() * (max - min) + min) / unitSize) * unitSize
@@ -48,10 +53,13 @@ function createFood() {
     }
     foodX = randomFood(0, gameWidth - unitSize)
     foodY = randomFood(0, gameHeight - unitSize)
-    console.log(foodX)
+    console.log(foodX, foodY)
 }
 
-function drawFood() { }
+function drawFood() {
+    ctx.fillStule = foodColor;
+    ctx.fillRect(foodX, foodY, unitSize, unitSize);
+}
 
 function moveSnake() { }
 
