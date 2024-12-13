@@ -57,7 +57,7 @@ function createFood() {
 }
 
 function drawFood() {
-    ctx.fillStule = foodColor;
+    ctx.fillStyle = foodColor;
     ctx.fillRect(foodX, foodY, unitSize, unitSize);
 }
 
