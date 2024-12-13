@@ -28,6 +28,7 @@ let snake = [
 window.addEventListener("keydown", changeDirection);
 
 gameStart();
+createFood();
 
 function gameStart() { }
 
@@ -35,7 +36,20 @@ function nextTick() { }
 
 function clearBoard() { }
 
-function createFood() { }
+/*
+* Create a random food location
+* The food should be placed at a random location on the game board
+* The location should be a multiple of the unit size
+*/
+function createFood() {
+    function randomFood(min, max) {
+        const randNum = Math.round((Math.random() * (max - min) + min) / unitSize) * unitSize
+        return randNum
+    }
+    foodX = randomFood(0, gameWidth - unitSize)
+    foodY = randomFood(0, gameHeight - unitSize)
+    console.log(foodX)
+}
 
 function drawFood() { }
 
