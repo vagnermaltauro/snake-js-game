@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const gameScore = document.getElementById("score");
-const resetButton = document.getElementById("resetButton");
+const resetButton = document.getElementById("resetGame");
 const ctx = canvas.getContext("2d");
 
 const gameWidth = canvas.width;
@@ -28,6 +28,7 @@ let snake = [
 ];
 
 window.addEventListener("keydown", changeDirection);
+resetButton.addEventListener("click", resetGame);
 
 gameStart();
 
@@ -185,8 +186,63 @@ function changeDirection(event) {
     }
 }
 
-function checkGameOver() { }
+/*
+ * @function checkGameOver
+ * @description Checks if the game is over
+ * The game is over if the snake hits the wall or itself
+ * @returns {void}
+ */
+function checkGameOver() {
+    switch (true) {
+        case (snake[0].x < 0):
+            running = false;
+            break;
+        case (snake[0].x >= gameWidth):
+            running = false;
+            break;
+        case (snake[0].y < 0):
+            running = false;
+            break;
+        case (snake[0].y >= gameHeight):
+            running = false;
+            break;
+    }
 
-function displayGameOver() { }
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+            running = false;
+        }
+    }
+}
 
-function resetGame() { }
+/*
+* @function displayGameOver
+* @description Displays the game over message
+* @returns {void}
+*/
+function displayGameOver() {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over", gameWidth / 2, gameHeight / 2);
+    running = false;
+}
+
+/*
+* @function resetGame
+* @description Resets the game to initial state
+* @returns {void}
+*/
+function resetGame() {
+    score = 0;
+    xVelocity = unitSize;
+    yVelocity = 0;
+    snake = [
+        { x: unitSize * 4, y: 0 },
+        { x: unitSize * 3, y: 0 },
+        { x: unitSize * 2, y: 0 },
+        { x: unitSize, y: 0 },
+        { x: 0, y: 0 }
+    ];
+    gameStart();
+}
