@@ -104,6 +104,13 @@ function drawFood() {
     ctx.fillRect(foodX, foodY, unitSize, unitSize);
 }
 
+/*
+* @function moveSnake
+* @description Moves the snake by adding a new head in the direction of movement
+* If the snake eats the food, it grows by not removing the tail
+* If the snake doesn't eat the food, it moves by adding a new head and removing the tail
+* @returns {void}
+*/
 function moveSnake() {
     console.log({
         snake0X: snake[0].x,
@@ -117,7 +124,7 @@ function moveSnake() {
 
     const foodEaten = snake[0].x === foodX && snake[0].y === foodY;
     if (foodEaten) {
-        score+=1;
+        score += 1;
         gameScore.textContent = score;
         createFood();
     } else {
@@ -125,6 +132,11 @@ function moveSnake() {
     }
 }
 
+/*
+* @function drawSnake
+* @description Draws the snake on the canvas
+* @returns {void}
+*/
 function drawSnake() {
     ctx.fillStyle = snakeColor;
     ctx.strokeStyle = snakeBorder;
@@ -134,6 +146,13 @@ function drawSnake() {
     })
 }
 
+/*
+* @function changeDirection
+* @description Changes the direction of the snake based on the key pressed
+* The snake cannot reverse its direction
+* @param {object} event - The keydown event object
+* @returns {void}
+ */
 function changeDirection(event) {
     const keyPressed = event.keyCode;
     const LEFT = 37;
@@ -146,7 +165,7 @@ function changeDirection(event) {
     const goingRight = xVelocity === unitSize;
     const goingLeft = xVelocity === -unitSize;
 
-    switch(true) {
+    switch (true) {
         case keyPressed === LEFT && !goingRight:
             xVelocity = -unitSize;
             yVelocity = 0;
