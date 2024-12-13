@@ -1,4 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
+const gameScore = document.getElementById("score");
+const resetButton = document.getElementById("resetButton");
 const ctx = canvas.getContext("2d");
 
 const gameWidth = canvas.width;
@@ -28,12 +30,39 @@ let snake = [
 window.addEventListener("keydown", changeDirection);
 
 gameStart();
-createFood();
-drawFood();
 
-function gameStart() { }
+/*
+ * @function gameLoop
+ * @description Main game loop
+ * @returns {void}
+ */
+function gameStart() {
+    running = true;
+    gameScore.textContent = score;
+    createFood();
+    drawFood();
+}
 
-function nextTick() { }
+/**
+ * Executes the next tick of the game loop.
+ * If the game is running, it schedules the next tick after 75 milliseconds.
+ * During each tick, it clears the board, draws the food, moves the snake, draws the snake, and checks for game over.
+ * If the game is not running, it displays the game over message.
+ */
+function nextTick() {
+    if (running) {
+        setTimeout(() => {
+            clearBoard();
+            drawFood();
+            moveSnake();
+            drawSnake();
+            checkGameOver();
+            nextTick();
+        }, 75);
+    } else {
+        displayGameOver();
+    }
+}
 
 function clearBoard() { }
 
@@ -56,6 +85,11 @@ function createFood() {
     console.log(foodX, foodY)
 }
 
+/*
+* @function drawFood
+* @description Draws the food on the canvas
+* @returns {void}
+*/
 function drawFood() {
     ctx.fillStyle = foodColor;
     ctx.fillRect(foodX, foodY, unitSize, unitSize);
